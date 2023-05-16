@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./navbar.css">
+    <link rel="stylesheet" href="./style.css">
+	<link rel="stylesheet" href="./login.css">
+    <link rel="stylesheet" href="./footer.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <title>Registration Form</title>
+
+	
+</head>
+<!-- <script>
+	$(function(){
+	  $("#navbar-placeholder").load("navbar.html");
+	});
+	</script>
+	<script>
+	  $(function(){
+		$("#footer-placeholder").load("footer.html");
+	  });
+	  </script> -->
+<body>
+	<div id="navbar-placeholder">
+	</div>
+    <div class="container">
+        <h2>Registration Form</h2>
+        <form id="registration-form" novalidate>
+            <div class="form-group">
+                <label class="radio-group">
+                    <input type="radio" name="user-type" value="normal" checked/> Normal User
+                </label>
+                <label class="radio-group">
+                    <input type="radio" name="user-type" value="owner"/> Mess Owner
+                </label>
+            </div>
+
+            <div id="normal-user-form">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required/>
+                </div>
+
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required/>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required/>
+                </div>
+
+                <div class="form-group">
+                    <label for="food-preference">Food Preference:</label>
+                    <select id="food-preference" name="food-preference" required>
+                        <option value="">Select one</option>
+                        <option value="veg">Vegetarian</option>
+                        <option value="nonveg">Non-Vegetarian</option>
+                        <option value="both">Both</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="mess-owner-form" style="display: none;">
+                <div class="form-group">
+                    <label for="email-owner">Email:</label>
+                    <input type="email" id="email-owner" name="email-owner" required/>
+                </div>
+
+              
+
+                <div class="form-group">
+                    <label for="username-owner">Username:</label>
+                    <input type="text" id="username-owner" name="username-owner" required/>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="password-owner">Password:</label>
+                    <input type="password" id="password-owner" name="password-owner" required/>
+                </div>
+
+                <div class="form-group">
+                    <label for="mess-name">Mess Name:</label>
+                    <input type="text" id="mess-name" name="mess-name" required/>
+                </div>
+                <div class="form-group">
+                    <label for="number">Contact no.:</label>
+                    <input type="text" id="number" name="number" required/>
+                </div>
+
+                <div class="form-group">
+                    <label for="food-serving">Food Serving:</label>
+                    <select id="food-serving" name="food-serving" required/>
+                        <option value="">Select one</option>
+                        <option value="veg">Vegetarian</option>
+                        <option value="nonveg">Non-Vegetarian</option>
+                        <option value="both">Both</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button class="btn-submit" type="submit">Submit</button>
+            </div>
+
+        </form>
+		<div class="login-link">
+			<p>If you are registered user, <a href="signUs.html">click here</a>.</p>
+		  </div>
+    </div>
+	<footer>
+		<div id="footer-placeholder">
+		</div>
+	  </footer>
+    <script>
+        document.getElementById("registration-form").addEventListener("submit", function (event) {
+            console.log("here")
+            event.preventDefault(); // Prevent form submission
+
+            // Get the selected user type
+            var userType = document.querySelector('input[name="user-type"]:checked').value;
+
+            // Get form values based on user type
+            var formData = {};
+
+            if (userType === 'normal') {
+                formData.email = document.getElementById("email").value;
+                formData.username = document.getElementById("username").value;
+                formData.password = document.getElementById("password").value;
+                formData.foodPreference = document.getElementById("food-preference").value;
+            } else if (userType === 'owner') {
+                formData.email = document.getElementById("email-owner").value;
+                formData.number = document.getElementById("number").value;
+                formData.username = document.getElementById("username-owner").value;
+                formData.password = document.getElementById("password-owner").value;
+                formData.messName = document.getElementById("mess-name").value;
+                formData.foodServing = document.getElementById("food-serving").value;
+            }
+
+            // Print form values (replace with your desired logic)
+            console.log(formData);
+
+            
+
+
+
+
+
+        });
+
+        // Show the appropriate form based on user type
+        function showForm(userType) {
+            var normalUserForm = document.getElementById("normal-user-form");
+            var messOwnerForm = document.getElementById("mess-owner-form");
+
+            if (userType === 'normal') {
+                normalUserForm.style.display = "block";
+                messOwnerForm.style.display = "none";
+            } else if (userType === 'owner') {
+                normalUserForm.style.display = "none";
+                messOwnerForm.style.display = "block";
+            }
+        }
+
+        // Listen for changes in the user type selection
+        var userTypeRadios = document.getElementsByName("user-type");
+
+        for (var i = 0; i < userTypeRadios.length; i++) {
+            userTypeRadios[i].addEventListener("change", function () {
+                showForm(this.value);
+            });
+        }
+
+        // Show the default form based on the initial selection
+        showForm(document.querySelector('input[name="user-type"]:checked').value);
+    </script>
+
+</body>
+
+</html>
