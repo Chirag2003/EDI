@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Today's Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .menu-form {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="date"],
+        select,
+        input[type="text"],
+        input[type="checkbox"] {
+            width: 100%;
+            padding: 8px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+        }
+
+        .checkbox-group {
+            margin-top: 5px;
+        }
+
+        .checkbox-group label {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        input[type="submit"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Add Today's Menu</h1>
+    <div class="menu-form">
+        <form action="#" method="post">
+            <div class="form-group">
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="Date" required>
+            </div>
+
+            <div class="form-group">
+                <label for="meal">Meals:</label>
+                <select id="meal" name="Meals" required>
+                    <option value="lunch">Lunch</option>
+                    <option value="dinner">Dinner</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="riceplate">Riceplate(price):</label>
+                <input type="number" id="riceplate" name="Price" required>
+            </div>
+
+            <div class="form-group">
+                <label for="subji">Subji:</label>
+                    <label for="subji1">Subji 1</label>
+                    <input type="text" id="subji1" name="Sabji1" value="Subji 1">
+                    <label for="subji2">Subji 2</label>
+                    <input type="text" id="subji2" name="Sabji2" value="Subji 2">
+                    <label for="subji3">Subji 3</label>
+                    <input type="text" id="subji3" name="Sabji3" value="Subji 3">
+                    
+            </div>
+
+            <div class="form-group">
+                <label for="rice">Rice:</label>
+                <input type="text" id="rice" name="Rice" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="drinks">Drinks:</label>
+                <div class="checkbox-group">
+                   
+                   
+                    <input type="text" id="milk" name="Drinks" value="Milk">
+                   
+                    
+                </div>
+            </div>
+
+            <label for="roti">Roti:</label>
+            <div class="form-group">
+                
+                <div class="checkbox-group">
+                 
+                    <input type="text" id="puranpoli" name="Roti" value="Puran Poli">
+                   
+                </div>
+            </div>
+
+            <input type="submit" value="Add Menu">
+        </form>
+    </div>
+</body>
+<script>
+    // Get the form element
+const form = document.querySelector('form');
+
+// Add event listener for form submission
+form.addEventListener('submit',async function(event) {
+  event.preventDefault(); // Prevent the form from submitting
+
+  // Create an empty object to store form data
+  const formData = {};
+
+  // Get all form inputs
+  const inputs = form.querySelectorAll('input, select');
+
+  // Loop through each input and add its value to the formData object
+  inputs.forEach(function(input) {
+    const name = input.name;
+    const value = input.type === 'checkbox' ? input.checked : input.value;
+    if (name) {
+      formData[name] = value;
+    }
+  });
+
+  // Display the form data object in the console
+  console.log(formData);
+  const token=localStorage.getItem("token")
+  const res=await fetch("http://localhost:5881/api/menu/create",
+            {
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json",
+                    "Authorization":`Bearer ${token}`
+                },
+                body:JSON.stringify(formData),
+               
+                
+            });
+            const data=(await res.json())
+            console.log(data,"Data here");
+            if(!data){
+                console.log("something went wrong");
+                alert("something went wrong");
+                return;
+            }else{
+                alert("menu added successfully!!")
+
+            // const newLocation=window.location.origin + "/signUS.html"
+            // window.location.replace(newLocation)
+        }
+});
+          
+
+</script>
+</html>

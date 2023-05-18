@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express-async-handler": "^1.2.0",
+    "mongodb": "^5.5.0",
+    "mongoose": "^7.1.1"
+  }
+}

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #d6d3d3;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #2b5c08;
+            color: #fff;
+        }
+
+        tr {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        .add-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .add-button:hover {
+            background-color: #64f61b;
+        }
+    </style>
+</head>
+<body>
+    <h1>Previous Day's Menu</h1>
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Meals</th>
+            <th>Riceplate(Price)</th>
+            <th>Subji</th>
+            <th>Rice</th>
+            <th>Drinks</th>
+            <th>Roti</th>
+            <th>Action</th>
+        </tr>
+        <tr>
+            <td>2023-05-17</td>
+            <td>Lunch</td>
+            <td>70Rupees</td>
+            <td>Paneer, Chole, Shev-Baji</td>
+            <td>Basmati Rice</td>
+            <td>Milk</td>
+            <td>Chapati, Paratha</td>
+            <td><a href="#">Remove</a></td>
+        </tr>
+        <!-- Add more rows for previous day's menu if needed -->
+    </table>
+
+    <h2>Add Today's Menu</h2>
+    <a href="todaysmenu.html" class="add-button">Add Today's Menu</a>
+</body>
+<script>
+(async ()=>{
+const table = document.querySelector('table');
+const token=localStorage.getItem("token")
+    const res=await fetch("http://localhost:5881/api/menu/current",
+            {
+                method:"GET",
+                headers:{
+                    // "Content-Type":"application/json",
+                    "Authorization":`Bearer ${token}`
+                },
+                // body:JSON.stringify(formData),
+               
+                
+            });
+            const data=(await res.json())
+            console.log(data,"Data here");
+            if(!data){
+                console.log("something went wrong");
+                alert("something went wrong");
+                return;
+            }
+
+
+            for(menu of data){
+// Create a new row
+const newRow = document.createElement('tr');
+
+// Add cells to the new row
+const dateCell = document.createElement('td');
+dateCell.textContent = menu.Date;
+newRow.appendChild(dateCell);
+
+const mealCell = document.createElement('td');
+mealCell.textContent = menu.Meals;
+newRow.appendChild(mealCell);
+
+const riceplateCell = document.createElement('td');
+riceplateCell.textContent = menu.Price;
+newRow.appendChild(riceplateCell);
+
+const subjiCell = document.createElement('td');
+subjiCell.textContent = menu.Sabji.Sabji1 + "," +menu.Sabji.Sabji2 + "," + menu.Sabji.Sabji3 ;
+newRow.appendChild(subjiCell);
+
+const riceCell = document.createElement('td');
+riceCell.textContent = menu.Rice;
+newRow.appendChild(riceCell);
+
+const drinksCell = document.createElement('td');
+drinksCell.textContent = menu.Drinks;
+newRow.appendChild(drinksCell);
+
+const rotiCell = document.createElement('td');
+rotiCell.textContent = menu.Roti;
+newRow.appendChild(rotiCell);
+
+const actionCell = document.createElement('td');
+const removeLink = document.createElement('a');
+removeLink.href = '#';
+removeLink.textContent = 'Remove';
+actionCell.appendChild(removeLink);
+newRow.appendChild(actionCell);
+
+// Append the new row to the table
+table.appendChild(newRow);
+            }
+})();
+
+
+
+
+
+    // Get the table element
+
+
+
+</script>
+</html>

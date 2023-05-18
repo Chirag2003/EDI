@@ -120,7 +120,8 @@
 		</div>
 	  </footer>
     <script>
-        document.getElementById("registration-form").addEventListener("submit", function (event) {
+        
+        document.getElementById("registration-form").addEventListener("submit", async function (event) {
             console.log("here")
             event.preventDefault(); // Prevent form submission
 
@@ -134,24 +135,40 @@
                 formData.email = document.getElementById("email").value;
                 formData.username = document.getElementById("username").value;
                 formData.password = document.getElementById("password").value;
-                formData.foodPreference = document.getElementById("food-preference").value;
+                formData.foodserving = document.getElementById("food-preference").value;
+                formData.isOwner=false;
             } else if (userType === 'owner') {
                 formData.email = document.getElementById("email-owner").value;
-                formData.number = document.getElementById("number").value;
+                formData.contactno = document.getElementById("number").value;
                 formData.username = document.getElementById("username-owner").value;
                 formData.password = document.getElementById("password-owner").value;
-                formData.messName = document.getElementById("mess-name").value;
-                formData.foodServing = document.getElementById("food-serving").value;
+                formData.messname = document.getElementById("mess-name").value;
+                formData.foodserving = document.getElementById("food-serving").value;
+                formData.isOwner=true;
+
             }
 
             // Print form values (replace with your desired logic)
             console.log(formData);
 
-            
+            const res=await fetch("http://localhost:5881/api/users/register",
+            {
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify(formData)
+            });
+            const data=(await res.json())
+            if(!data._id){
+                console.log("something went wrong");
+                alert("something went wrong");
+                return;
+            }else{
 
-
-
-
+            const newLocation=window.location.origin + "/signUS.html"
+            window.location.replace(newLocation)
+        }
 
         });
 
@@ -180,6 +197,7 @@
 
         // Show the default form based on the initial selection
         showForm(document.querySelector('input[name="user-type"]:checked').value);
+       
     </script>
 
 </body>
