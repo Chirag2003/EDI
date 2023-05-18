@@ -24,7 +24,7 @@ const createMenu = asyncHandler(async(req,res) => {
 });
 
 const getMenu = asyncHandler(async(req,res) => {
-    const MenuSpecific = await Menu.findById(req.params.id);
+    const MenuSpecific = await Menu.find({user_id:req.params.id});
     if (!MenuSpecific) {
         res.status(404);
         throw new Error("Menu not found");

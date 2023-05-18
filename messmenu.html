@@ -81,14 +81,15 @@
         <!-- Add more rows for previous day's menu if needed -->
     </table>
 
-    <h2>Add Today's Menu</h2>
-    <a href="todaysmenu.html" class="add-button">Add Today's Menu</a>
 </body>
 <script>
 (async ()=>{
+const urlParams = new URLSearchParams(window.location.search);
+const myParam = urlParams.get('id');
+
 const table = document.querySelector('table');
 const token=localStorage.getItem("token")
-    const res=await fetch("http://localhost:5881/api/menu/current",
+    const res=await fetch(`http://localhost:5881/api/menu/viewMenu/${myParam}`,
             {
                 method:"GET",
                 headers:{

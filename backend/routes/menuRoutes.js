@@ -7,6 +7,7 @@ const { getMenus, createMenu, updateMenu, deleteMenu, getMenu }=require("../cont
 // router.route("/").get(getMenus).post(createMenu);
 // router.route("/:id").get(getMenu).put(updateMenu).delete(deleteMenu)
 
+router.get("/viewMenu/:id",getMenu)
 router.post("/create",validateToken,createMenu);
 
 router.put("/:id",updateMenu);
